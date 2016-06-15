@@ -1,4 +1,3 @@
-//animation isn't working at scroll height!  
  var pointsArray = document.getElementsByClassName('point');
  
  var animatePoints = function(points) {
