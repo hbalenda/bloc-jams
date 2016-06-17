@@ -77,5 +77,17 @@ var setCurrentAlbum = function(album) {
 };
 
 window.onload = function(){
-    setCurrentAlbum(albumPrince);
+    setCurrentAlbum(albumPicasso);
 };
+
+var albums = [albumPicasso, albumMarconi, albumPrince];
+var albumsIndex = 0;
+document.getElementsByClassName('album-cover-art')[0].addEventListener("click", function(){
+    if(albumsIndex == albums.length - 1) {
+        albumsIndex = 0;
+    }
+    else {
+        albumsIndex += 1;
+    }
+    setCurrentAlbum(albums[albumsIndex]);
+});
