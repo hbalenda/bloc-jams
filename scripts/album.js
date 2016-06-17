@@ -28,6 +28,25 @@ var albumPicasso = {
      ]
  };
 
+ var albumPrince = {
+     title: 'Prince',
+     artist: 'Prince',
+     label: 'Warner Bros. Records',
+     year: '1979',
+     albumArtUrl: 'assets/images/album_covers/20.png',
+     songs: [
+         { title: 'I Wanna Be Your Lover', duration: '5:50' },
+         { title: 'Why You Wanna Treat Me So Bad?', duration: '3:49' },
+         { title: 'Sexy Dancer', duration: '4:19'},
+         { title: 'When We\'re Dancing Close and Slow', duration: '5:23' },
+         { title: 'With You', duration: '4:00'},
+         { title: 'Bambi', duration: '4:23'},
+         { title: 'Still Waiting', duration: '4:15'},
+         { title: 'I Feel for You', duration: '3:25'},
+         { title: 'It\'s Gonna Be Lonely', duration: '5:28'},
+     ]
+ };
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template = 
       '<tr class="album-view-song-item">'
@@ -58,5 +77,5 @@ var setCurrentAlbum = function(album) {
 };
 
 window.onload = function(){
-    setCurrentAlbum(albumPicasso);
+    setCurrentAlbum(albumPrince);
 };
