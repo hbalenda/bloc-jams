@@ -25,6 +25,7 @@ var currentSoundFile = null;
 var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseBarButton = $('.main-controls .play-pause')
 
 var trackIndex = function(album, song) {
      return album.songs.indexOf(song);
@@ -82,7 +83,26 @@ $(document).ready(function(){
     setCurrentAlbum(albumPicasso);
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playPauseBarButton.click(togglePlayFromPlayerBar);
 });
+
+var togglePlayFromPlayerBar = function() {
+    if (!currentSoundFile){
+        setSong(1);
+        updatePlayerBarSong();
+    };
+    var currentlyPlayingElement = getSongNumberCell(currentlyPlayingSongNumber);
+    if(currentSoundFile.isPaused()) {
+        currentSoundFile.play();
+        $playPauseBarButton.html(playerBarPlayButton);
+        currentlyPlayingElement.html(playButtonTemplate);
+    }
+    else {
+        currentSoundFile.pause();
+        $playPauseBarButton.html(playerBarPauseButton);
+        currentlyPlayingElement.html(pauseButtonTemplate)
+    };
+};
 
 var createSongRow = function(songNumber, songName, songLength) {
     var template = 
@@ -110,12 +130,12 @@ var createSongRow = function(songNumber, songName, songLength) {
         else if (currentlyPlayingSongNumber === songNumber) {
             if (currentSoundFile.isPaused()) {
                 $(this).html(pauseButtonTemplate);
-                $('.main-controls .play-pause').html(playerBarPauseButton);
+                $playPauseBarButton.html(playerBarPauseButton);
                 currentSoundFile.play();
             }
             else if (!currentSoundFile.isPaused()){
                 $(this).html(playButtonTemplate);
-                $('.main-controls .play-pause').html(playerBarPlayButton);
+                $playPauseBarButton.html(playerBarPlayButton);
                 currentSoundFile.pause();
             };
         } 
@@ -153,7 +173,7 @@ var updatePlayerBarSong = function() {
     $songName.text(currentSongFromAlbum.title);
     $artistName.text(currentAlbum.artist);
     $artistSongMobile.text(currentSongFromAlbum.title + ' - ' + currentAlbum.artist);
-    $('.main-controls .play-pause').html(playerBarPauseButton);
+    $playPauseBarButton.html(playerBarPauseButton);
 };
 
 var setSong = function(songNumber) {
