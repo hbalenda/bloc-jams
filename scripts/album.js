@@ -32,7 +32,7 @@ var updateSeekBarWhileSongPlays = function() {
 var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
     var offsetXPercent = seekBarFillRatio * 100;
     offsetXPercent = Math.max(0, offsetXPercent);
-    ofsetXPercent = Math.min(100, offsetXPercent);
+    offsetXPercent = Math.min(100, offsetXPercent);
     var percentageString = offsetXPercent + '%';
     $seekBar.find('.fill').width(percentageString);
     $seekBar.find('.thumb').css({left: percentageString});
@@ -151,17 +151,29 @@ $(document).ready(function(){
 });
 
 var togglePlayFromPlayerBar = function() {
-    var currentlyPlayingElement = getSongNumberCell(currentlyPlayingSongNumber);
-    if(currentSoundFile.isPaused()) {
+    // if there's no currently playing song to play or pause,
+    // play the first one
+    
+    if (!currentSoundFile) {
+        setSong(1);
+        var currentlyPlayingElement = getSongNumberCell(currentlyPlayingSongNumber);
         currentSoundFile.play();
-        $playPauseBarButton.html(playerBarPauseButton);
+        updateSeekBarWhileSongPlays();        
+        updatePlayerBarSong();
         currentlyPlayingElement.html(pauseButtonTemplate);
-        }
-    else {
-        currentSoundFile.pause();
-        $playPauseBarButton.html(playerBarPlayButton);
-        currentlyPlayingElement.html(playButtonTemplate)
-        };
+    } else {
+        var currentlyPlayingElement = getSongNumberCell(currentlyPlayingSongNumber);
+        if(currentSoundFile.isPaused()) {
+            currentSoundFile.play();
+            $playPauseBarButton.html(playerBarPauseButton);
+            currentlyPlayingElement.html(pauseButtonTemplate);
+            }
+        else {
+            currentSoundFile.pause();
+            $playPauseBarButton.html(playerBarPlayButton);
+            currentlyPlayingElement.html(playButtonTemplate)
+            };
+    }
 };
 
 var createSongRow = function(songNumber, songName, songLength) {
